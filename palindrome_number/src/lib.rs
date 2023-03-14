@@ -23,3 +23,21 @@ pub fn is_palindrome(x: i32) -> bool {
         return false;
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_not_palindrome() {
+        let result = is_palindrome(10001000);
+        assert_eq!(result, false);
+    }
+
+    #[test]
+    fn test_palindrome() {
+        let result = is_palindrome(112211);
+        assert_eq!(result, true);
+    }
+}
