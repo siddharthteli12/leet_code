@@ -47,3 +47,32 @@ pub fn roman_to_int(s: String) -> i32 {
 
     total
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_simple_roman() {
+        let result = roman_to_int("XII".to_string());
+        assert_eq!(result, 12);
+    }
+
+    #[test]
+    fn test_simple_roman_1() {
+        let result = roman_to_int("III".to_string());
+        assert_eq!(result, 3);
+    }
+
+    #[test]
+    fn test_complex_roman_1() {
+        let result = roman_to_int("LVIII".to_string());
+        assert_eq!(result, 58);
+    }
+
+    #[test]
+    fn test_complex_roman_2() {
+        let result = roman_to_int("MCMXCIV".to_string());
+        assert_eq!(result, 1994);
+    }
+}
