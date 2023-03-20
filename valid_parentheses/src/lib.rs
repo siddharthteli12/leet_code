@@ -40,3 +40,44 @@ pub fn match_closing_parenthese(parenthese1: char, parenthese2: char) -> bool {
         _ => false,
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_simple_parentheses() {
+        let result = is_valid(String::from("()"));
+        assert_eq!(result, true);
+    }
+
+    #[test]
+    fn test_all_parentheses() {
+        let result = is_valid(String::from("()[]{}"));
+        assert_eq!(result, true);
+    }
+
+    #[test]
+    fn test_invalid_parentheses() {
+        let result = is_valid(String::from("(][]{}"));
+        assert_eq!(result, false);
+    }
+
+    #[test]
+    fn test_empty_parentheses() {
+        let result = is_valid(String::from(""));
+        assert_eq!(result, false);
+    }
+
+    #[test]
+    fn test_single_parentheses() {
+        let result = is_valid(String::from("{"));
+        assert_eq!(result, false);
+    }
+
+    #[test]
+    fn test_odd_parentheses() {
+        let result = is_valid(String::from("{}{"));
+        assert_eq!(result, false);
+    }
+}
