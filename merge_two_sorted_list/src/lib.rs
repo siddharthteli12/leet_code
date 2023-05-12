@@ -11,6 +11,16 @@ impl ListNode {
     fn new(val: i32) -> Self {
         ListNode { next: None, val }
     }
+
+    fn insert(mut self, val: i32) -> Self {
+        match self.next {
+            Some(node) => node.insert(val),
+            None => {
+                self.next = Some(Box::new(ListNode::new(val)));
+                self
+            }
+        }
+    }
 }
 
 pub fn merge_two_lists(
@@ -40,5 +50,29 @@ mod tests {
     #[test]
     fn test_empty_list() {
         assert_eq!(merge_two_lists(None, None), None);
+    }
+
+    #[test]
+    fn test_with_merge_with_both_list() {
+        let list1 = Box::new(ListNode::new(10));
+        let list1 = Box::new(list1.insert(12));
+
+        let list2 = Box::new(ListNode::new(101));
+        let list2 = Box::new(list2.insert(212));
+
+        let result_list = Box::new(ListNode {
+            val: 10,
+            next: Some(Box::new(ListNode {
+                val: 12,
+                next: Some(Box::new(ListNode {
+                    val: 101,
+                    next: Some(Box::new(ListNode {
+                        val: 212,
+                        next: None,
+                    })),
+                })),
+            })),
+        });
+        assert_eq!(merge_two_lists(Some(list1), Some(list2)), Some(result_list));
     }
 }
