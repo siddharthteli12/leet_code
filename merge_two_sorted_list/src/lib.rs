@@ -12,12 +12,11 @@ impl ListNode {
         ListNode { next: None, val }
     }
 
-    fn insert(mut self, val: i32) -> Self {
+    fn insert(&mut self, val: i32) {
         match self.next {
-            Some(node) => node.insert(val),
+            Some(ref mut node) => node.insert(val),
             None => {
                 self.next = Some(Box::new(ListNode::new(val)));
-                self
             }
         }
     }
@@ -54,11 +53,11 @@ mod tests {
 
     #[test]
     fn test_with_merge_with_both_list() {
-        let list1 = Box::new(ListNode::new(10));
-        let list1 = Box::new(list1.insert(12));
+        let mut list1 = Box::new(ListNode::new(10));
+        let _ = Box::new(list1.insert(12));
 
-        let list2 = Box::new(ListNode::new(101));
-        let list2 = Box::new(list2.insert(212));
+        let mut list2 = Box::new(ListNode::new(101));
+        let _ = Box::new(list2.insert(212));
 
         let result_list = Box::new(ListNode {
             val: 10,
