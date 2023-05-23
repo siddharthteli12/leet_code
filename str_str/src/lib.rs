@@ -1,8 +1,8 @@
 pub fn str_str(haystack: String, needle: String) -> i32 {
-    match haystack.find(&needle) {
-        None => -1 as i32,
-        Some(n) => n as i32,
-    }
+    haystack
+        .find(&needle)
+        .map(|val| val as i32)
+        .unwrap_or_else(|| -1)
 }
 
 #[cfg(test)]
