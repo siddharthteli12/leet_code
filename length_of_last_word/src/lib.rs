@@ -1,9 +1,5 @@
 pub fn length_of_last_word(s: String) -> i32 {
-    let s = s.trim();
-    match s.rsplit_once(" ") {
-        Some((_, last)) => last.len() as i32,
-        None => s.len() as i32,
-    }
+    s.split_whitespace().last().unwrap_or("").len() as i32
 }
 
 #[cfg(test)]
