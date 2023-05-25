@@ -8,3 +8,7 @@ Leet code hands on
 - [valid_parentheses](https://leetcode.com/problems/valid-parentheses/)
 - [merge_two_sorted_lists](https://leetcode.com/problems/merge-two-sorted-lists/)
 - [remove_duplicates](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
+- [remove_element](https://leetcode.com/problems/remove-element/)
+- [str_str](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/)
+- [search_insert](https://leetcode.com/problems/search-insert-position/)
+- [length_of_last_word](https://leetcode.com/problems/length-of-last-word/)
