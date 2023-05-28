@@ -1,20 +1,19 @@
 use std::ops::Add;
 
-pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {
-    let mut result_vec: Vec<i32> = digits.clone();
-    for (index, digit) in digits.iter().enumerate().rev() {
+pub fn plus_one(mut digits: Vec<i32>) -> Vec<i32> {
+    for (index, digit) in digits.clone().iter().enumerate().rev() {
         let digit = digit.add(1);
         if digit < 10 {
-            result_vec[index] = digit;
-            return result_vec;
+            digits[index] = digit;
+            return digits;
         } else {
-            result_vec[index] = 0;
+            digits[index] = 0;
             continue;
         }
     }
-    result_vec.push(1);
-    result_vec.reverse();
-    result_vec
+    digits.push(1);
+    digits.reverse();
+    digits
 }
 
 #[cfg(test)]
