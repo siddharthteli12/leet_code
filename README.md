@@ -12,3 +12,4 @@ Leet code hands on
 - [str_str](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/)
 - [search_insert](https://leetcode.com/problems/search-insert-position/)
 - [length_of_last_word](https://leetcode.com/problems/length-of-last-word/)
+- [plus_one](https://leetcode.com/problems/plus-one/)
