@@ -1,21 +1,22 @@
 pub fn my_sqrt(x: i32) -> i32 {
     // Using binary search to find sqrt of x.
 
-    // Lower value is 1 while upper value is x itself.
-    let (mut lower, mut upper) = (1, x as i64);
-    let mut mid: i64;
+    // Lower value is 1.
+    // Upper value is sq root of max. value of i32.
+    let (mut lower, mut upper) = (1, 46340);
+    let mut mid: i32;
 
     while lower <= upper {
         mid = (lower + upper) / 2;
-        if mid * mid == x as i64 {
-            return mid as i32;
-        } else if mid * mid < x as i64 {
+        if mid * mid == x {
+            return mid;
+        } else if mid * mid < x {
             lower = mid + 1;
-        } else if mid * mid > x as i64 {
+        } else if mid * mid > x {
             upper = mid - 1;
         }
     }
-    return upper as i32;
+    return upper;
 }
 
 #[cfg(test)]
