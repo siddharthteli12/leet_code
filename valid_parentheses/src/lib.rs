@@ -24,11 +24,7 @@ pub fn is_valid(s: String) -> bool {
         }
     }
 
-    if stack.is_empty() {
-        return true;
-    } else {
-        return false;
-    }
+    return stack.is_empty();
 }
 
 pub fn match_closing_parenthese(parenthese1: char, parenthese2: char) -> bool {

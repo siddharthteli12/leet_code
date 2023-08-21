@@ -1,23 +1,47 @@
 use std::collections::HashMap;
+
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    let mut map = HashMap::new();
-    for (i, num) in nums.iter().enumerate() {
-        map.insert(num, i as i32);
-    }
-    for i in 0..nums.len() {
-        if let Some(val) = map.get(&(target - nums[i])) {
-            if *val != i as i32 {
-                return vec![i as i32, *val];
-            }
+    let mut index_to_value: HashMap<i32, usize> = HashMap::new();
+
+    for (index, num) in nums.iter().enumerate() {
+        if let Some(complimemt) = index_to_value.get(&(target - num)) {
+            return vec![*complimemt as i32, index as i32];
         }
+        index_to_value.insert(*num, index);
     }
 
-    return vec![0, 0];
+    nums
 }
 
 #[cfg(test)]
-mod tests {
+mod test {
     use super::*;
+    #[test]
+    fn empty_list() {
+        let nums = vec![];
+        assert_eq!(two_sum(nums, 0), vec![])
+    }
+
+    #[test]
+    fn test_with_positive_num() {
+        let nums = vec![20, 9, 11, 18, 1, 2];
+        let target = 10;
+        assert_eq!(two_sum(nums, target), vec![1, 4]);
+    }
+
+    #[test]
+    fn test_with_positive_num_2() {
+        let nums = vec![3, 2, 4];
+        let target = 6;
+        assert_eq!(two_sum(nums, target), [1, 2]);
+    }
+
+    #[test]
+    fn test_with_negative_num() {
+        let nums = vec![-20, -9, 11, 18, -1, 2];
+        let target = -10;
+        assert_eq!(two_sum(nums, target), vec![1, 4]);
+    }
 
     #[test]
     fn test_two_sum_with_sorted_ascending_list() {
@@ -40,12 +64,12 @@ mod tests {
     #[test]
     fn test_two_sum_with_duplicate_element() {
         let result = two_sum(vec![10, 1, 8, 1, 2, 12, 2, 5, 9], 3);
-        assert_eq!(result, vec![1, 6]);
+        assert_eq!(result, vec![3, 4]);
     }
 
     #[test]
     fn test_two_sum_with_negative_element() {
         let result = two_sum(vec![10, 1, 8, 1, -2, 12, -2, 5, 9], 3);
-        assert_eq!(result, vec![4, 7]);
+        assert_eq!(result, vec![6, 7]);
     }
 }
