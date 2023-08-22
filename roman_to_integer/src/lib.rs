@@ -1,19 +1,23 @@
 pub fn roman_to_int(s: String) -> i32 {
     let mut result;
     let mut iter = s.chars();
+    let utility = |previous_roman, roman_char| {
+        let value = convert_roman_to_num(roman_char) - 2 * convert_roman_to_num(previous_roman);
+        value
+    };
 
     if let Some(mut previous_roman) = iter.next() {
         result = convert_roman_to_num(previous_roman);
         for roman_char in iter {
             match (previous_roman, roman_char) {
                 ('I', 'V' | 'X') => {
-                    calculate_result_utility(previous_roman, roman_char, &mut result);
+                    result += utility(previous_roman, roman_char);
                 }
                 ('X', 'L' | 'C') => {
-                    calculate_result_utility(previous_roman, roman_char, &mut result);
+                    result += utility(previous_roman, roman_char);
                 }
                 ('C', 'D' | 'M') => {
-                    calculate_result_utility(previous_roman, roman_char, &mut result);
+                    result += utility(previous_roman, roman_char);
                 }
                 (_, _) => result += convert_roman_to_num(roman_char),
             }
@@ -36,11 +40,6 @@ pub fn convert_roman_to_num(roman_char: char) -> i32 {
         'M' => 1000,
         _ => unreachable!(),
     }
-}
-
-fn calculate_result_utility(previous_roman: char, roman_char: char, result: &mut i32) {
-    let value = convert_roman_to_num(roman_char) - 2 * convert_roman_to_num(previous_roman);
-    *result += value;
 }
 
 #[cfg(test)]
