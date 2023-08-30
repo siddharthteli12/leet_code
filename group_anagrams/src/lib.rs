@@ -1,44 +1,18 @@
-pub fn group_anagrams(mut strs: Vec<String>) -> Vec<Vec<String>> {
-    let mut result: Vec<Vec<String>> = vec![];
+use std::collections::HashMap;
 
-    while !strs.is_empty() {
-        if strs.len() == 1 {
-            result.push(vec![strs.pop().unwrap()]);
-        } else {
-            let str1 = strs.remove(0);
-            let mut local_index = 0;
-            let mut anagram_list: Vec<String> = vec![];
-            while local_index < strs.len() {
-                if compare_anagram(&str1, &strs[local_index].clone()) {
-                    anagram_list.push(strs.remove(local_index));
-                } else {
-                    local_index += 1;
-                }
-            }
-            anagram_list.push(str1);
-            result.push(anagram_list);
-        }
+pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
+    let mut hashmap = HashMap::<Vec<char>, Vec<String>>::new();
+
+    for str in strs {
+        let mut s_vec: Vec<char> = str.chars().collect();
+        s_vec.sort();
+        hashmap
+            .entry(s_vec)
+            .and_modify(|list| list.push(str.clone()))
+            .or_insert(vec![str]);
     }
 
-    result
-}
-
-fn compare_anagram(str1: &str, str2: &str) -> bool {
-    let mut char_count = [0; 26];
-
-    for char in str1.bytes() {
-        char_count[(char - b'a') as usize] += 1;
-    }
-
-    for char in str2.bytes() {
-        char_count[(char - b'a') as usize] -= 1;
-    }
-    for count in char_count {
-        if count != 0 {
-            return false;
-        }
-    }
-    true
+    hashmap.into_values().collect()
 }
 
 #[cfg(test)]
