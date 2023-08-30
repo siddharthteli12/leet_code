@@ -1,18 +1,25 @@
 use std::collections::HashMap;
 
 pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
-    let mut hashmap = HashMap::<Vec<char>, Vec<String>>::new();
+    let mut hashmap = HashMap::new();
 
     for str in strs {
-        let mut s_vec: Vec<char> = str.chars().collect();
-        s_vec.sort();
         hashmap
-            .entry(s_vec)
-            .and_modify(|list| list.push(str.clone()))
+            .entry(represent_in_char(&str))
+            .and_modify(|list: &mut Vec<String>| list.push(str.clone()))
             .or_insert(vec![str]);
     }
 
     hashmap.into_values().collect()
+}
+
+fn represent_in_char(str: &str) -> [i32; 26] {
+    let mut result = [0; 26];
+
+    for byte in str.bytes() {
+        result[(byte - b'a') as usize] += 1;
+    }
+    result
 }
 
 #[cfg(test)]
