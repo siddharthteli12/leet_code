@@ -1,14 +1,16 @@
 pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
     let mut result = vec![];
-    for (index, _) in nums.iter().enumerate() {
-        result.push(
-            nums.iter()
-                .enumerate()
-                .filter(|&(i, _)| i != index)
-                .map(|a| a.1)
-                .product(),
-        );
-    }
+    let mut mul = 1;
+    nums.iter().for_each(|num| {
+        result.push(mul);
+        mul *= num;
+    });
+    mul = 1;
+    nums.iter().enumerate().rev().for_each(|(index, num)| {
+        let value = result.get_mut(index).unwrap();
+        *value *= mul;
+        mul *= num;
+    });
     result
 }
 #[cfg(test)]
