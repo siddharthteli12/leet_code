@@ -1,16 +1,18 @@
 pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
-    let mut result = vec![];
-    let mut mul = 1;
-    nums.iter().for_each(|num| {
-        result.push(mul);
-        mul *= num;
-    });
-    mul = 1;
-    nums.iter().enumerate().rev().for_each(|(index, num)| {
-        let value = result.get_mut(index).unwrap();
-        *value *= mul;
-        mul *= num;
-    });
+    let mut result = vec![1; nums.len()];
+    let mut left = 1;
+    let mut right = 1;
+
+    nums.iter()
+        .enumerate()
+        .zip(nums.iter().enumerate().rev())
+        .for_each(|((left_index, left_mul), (right_index, right_mul))| {
+            result[left_index] *= left;
+            result[right_index] *= right;
+            left *= left_mul;
+            right *= right_mul;
+        });
+
     result
 }
 #[cfg(test)]
