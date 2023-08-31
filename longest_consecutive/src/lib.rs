@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-pub fn longest_consecutive(mut nums: Vec<i32>) -> i32 {
+pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
     if nums.len() < 2 {
         return nums.len() as i32;
     }
@@ -7,24 +7,19 @@ pub fn longest_consecutive(mut nums: Vec<i32>) -> i32 {
     for num in nums.iter() {
         num_set.insert(*num);
     }
-    nums.clear();
+    let mut max_value = 1;
+
     for num in num_set.iter() {
         if num_set.contains(&(num + 1)) && !num_set.contains(&(num - 1)) {
-            nums.push(*num);
-        }
-    }
-
-    let mut max_value = 1;
-    for key in nums.iter() {
-        let mut counter = 1;
-        while num_set.contains(&(key + counter)) {
-            counter += 1;
-            if max_value < counter {
-                max_value = counter;
+            let mut counter = 1;
+            while num_set.contains(&(num + counter)) {
+                counter += 1;
+                if max_value < counter {
+                    max_value = counter;
+                }
             }
         }
     }
-
     max_value
 }
 
