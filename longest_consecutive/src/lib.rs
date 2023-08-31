@@ -1,5 +1,8 @@
 use std::collections::{HashMap, HashSet};
 pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
+    if nums.len() < 2 {
+        return nums.len() as i32;
+    }
     let mut num_set: HashSet<i32> = HashSet::new();
     let mut start_map: HashMap<i32, Vec<i32>> = HashMap::new();
     for num in nums {
@@ -29,7 +32,7 @@ pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
         .values()
         .map(|list| list.len() as i32)
         .max()
-        .unwrap_or(0)
+        .unwrap_or(1)
 }
 
 #[cfg(test)]
@@ -38,13 +41,25 @@ mod tests {
 
     #[test]
     fn simple_list() {
-        let nums = vec![100,4,200,1,3,2];
+        let nums = vec![100, 4, 200, 1, 3, 2];
         assert_eq!(longest_consecutive(nums), 4);
     }
 
     #[test]
     fn simple_list_1() {
-        let nums = vec![100,4,105, 103,104, 1,3,2, 101, 102, 106];
+        let nums = vec![100, 4, 105, 103, 104, 1, 3, 2, 101, 102, 106];
         assert_eq!(longest_consecutive(nums), 7);
+    }
+
+    #[test]
+    fn single_item() {
+        let nums = vec![0];
+        assert_eq!(longest_consecutive(nums), 1);
+    }
+
+    #[test]
+    fn repeated_item() {
+        let nums = vec![0, 0];
+        assert_eq!(longest_consecutive(nums), 1);
     }
 }
