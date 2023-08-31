@@ -1,38 +1,31 @@
-use std::collections::{HashMap, HashSet};
-pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
+use std::collections::HashSet;
+pub fn longest_consecutive(mut nums: Vec<i32>) -> i32 {
     if nums.len() < 2 {
         return nums.len() as i32;
     }
     let mut num_set: HashSet<i32> = HashSet::new();
-    let mut start_map: HashMap<i32, Vec<i32>> = HashMap::new();
-    for num in nums {
-        num_set.insert(num);
+    for num in nums.iter() {
+        num_set.insert(*num);
     }
-
+    nums.clear();
     for num in num_set.iter() {
         if num_set.contains(&(num + 1)) && !num_set.contains(&(num - 1)) {
-            start_map.insert(*num, vec![*num]);
+            nums.push(*num);
         }
     }
 
-    for (key, value) in start_map.iter_mut() {
+    let mut max_value = 1;
+    for key in nums.iter() {
         let mut counter = 1;
-
-        loop {
-            if num_set.contains(&(key + counter)) {
-                value.push(key + counter);
-                counter += 1;
-            } else {
-                break;
+        while num_set.contains(&(key + counter)) {
+            counter += 1;
+            if max_value < counter {
+                max_value = counter;
             }
         }
     }
 
-    start_map
-        .values()
-        .map(|list| list.len() as i32)
-        .max()
-        .unwrap_or(1)
+    max_value
 }
 
 #[cfg(test)]
