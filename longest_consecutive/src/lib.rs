@@ -3,14 +3,11 @@ pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
     if nums.len() < 2 {
         return nums.len() as i32;
     }
-    let mut num_set: HashSet<i32> = HashSet::new();
-    for num in nums.iter() {
-        num_set.insert(*num);
-    }
+    let num_set: HashSet<i32> = nums.into_iter().collect();
     let mut max_value = 1;
 
     for num in num_set.iter() {
-        if num_set.contains(&(num + 1)) && !num_set.contains(&(num - 1)) {
+        if !num_set.contains(&(num - 1)) {
             let mut counter = 1;
             while num_set.contains(&(num + counter)) {
                 counter += 1;
