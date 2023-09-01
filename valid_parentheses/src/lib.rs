@@ -1,40 +1,44 @@
 pub fn is_valid(s: String) -> bool {
-    if s.len() <= 1 || s.len() % 2 != 0 {
-        println!("Inside first if, s.len --, {:?}", s.len());
+    if s.len() < 2 {
         return false;
     }
-    let s_vec: Vec<char> = s.chars().collect();
-    let mut stack: Vec<char> = Vec::new();
-    for item in s_vec.iter() {
-        match item {
-            '(' | '{' | '[' => stack.push(*item),
-            ')' | '}' | ']' => match stack.pop() {
-                Some(n) => {
-                    if match_closing_parenthese(n, *item) {
-                        continue;
-                    } else {
-                        return false;
+    let mut stack: Vec<char> = vec![];
+
+    for char in s.chars() {
+        match char {
+            opening_value @ ('(' | '[' | '{') => {
+                stack.push(opening_value);
+            }
+            closing_value @ (')' | ']' | '}') => {
+                if let Some(char_pop) = stack.pop() {
+                    match char_pop {
+                        local_value @ '(' => {
+                            if (local_value as u8 + 1) as char == closing_value {
+                                continue;
+                            } else {
+                                return false;
+                            }
+                        }
+                        local_value @ ('[' | '{') => {
+                            if (local_value as u8 + 2) as char == closing_value {
+                                continue;
+                            } else {
+                                return false;
+                            }
+                        }
+                        _ => return false,
                     }
+                } else {
+                    return false;
                 }
-                None => return false,
-            },
+            }
             _ => {
-                unreachable!();
+                unreachable!()
             }
         }
     }
 
-    return stack.is_empty();
-}
-
-pub fn match_closing_parenthese(parenthese1: char, parenthese2: char) -> bool {
-    print!("Par1 {:}, Par2 {:} .", parenthese1, parenthese2);
-    match (parenthese1, parenthese2) {
-        ('(', ')') => true,
-        ('{', '}') => true,
-        ('[', ']') => true,
-        _ => false,
-    }
+    stack.is_empty()
 }
 
 #[cfg(test)]
