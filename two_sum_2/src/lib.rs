@@ -1,12 +1,15 @@
 pub fn two_sum(numbers: Vec<i32>, target: i32) -> Vec<i32> {
     for (index, num) in numbers.iter().enumerate() {
-        for (index2, num2) in numbers.iter().enumerate().skip(index + 1) {
-            if num + num2 == target {
-                return vec![(index + 1) as i32, (index2 + 1) as i32];
+        let compliment = target - num;
+        if compliment >= *num {
+            if let Ok(index2) = numbers[(index + 1)..].binary_search(&compliment) {
+                return vec![(index + 1) as i32, (index + index2 + 2) as i32];
             }
+        } else if let Ok(index2) = numbers[..index].binary_search(&compliment) {
+            return vec![(index + 1) as i32, (index + index2 + 2) as i32];
         }
     }
-    unreachable!();
+    unreachable!()
 }
 
 #[cfg(test)]
