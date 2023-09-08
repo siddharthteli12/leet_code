@@ -1,17 +1,21 @@
+use std::cmp::Ordering;
+
 pub fn search(nums: Vec<i32>, target: i32) -> i32 {
     let mut left = 0;
     let mut right: i32 = (nums.len() - 1) as i32;
     let mut middle = right / 2;
 
     while right >= left {
-        if nums[middle as usize] > target {
-            right = middle - 1;
-            middle = (right + left) / 2;
-        } else if nums[middle as usize] < target {
-            left = middle + 1;
-            middle = (right + left) / 2;
-        } else {
-            return middle as i32;
+        match nums[middle as usize].cmp(&target) {
+            Ordering::Equal => return middle,
+            Ordering::Greater => {
+                right = middle - 1;
+                middle = (right + left) / 2;
+            }
+            Ordering::Less => {
+                left = middle + 1;
+                middle = (right + left) / 2;
+            }
         }
     }
     -1
