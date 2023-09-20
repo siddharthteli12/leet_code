@@ -1,19 +1,9 @@
 pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
-    let mut sudoku_2d = [[0; 9]; 9];
-
-    // Insert values.
-    for (row_index, row_values) in board.iter().enumerate() {
-        for (column_index, value) in row_values.iter().enumerate() {
-            let digit: usize = value.to_digit(10).unwrap_or_default() as usize;
-            sudoku_2d[row_index][column_index] = digit;
-        }
-    }
-
     // Validate rows.
     for index in 0..9 {
         let mut num_count = [0; 9];
         for index_2 in 0..9 {
-            let digit: usize = sudoku_2d[index][index_2];
+            let digit: usize = board[index][index_2].to_digit(10).unwrap_or_default() as usize;
             if digit != 0 {
                 if num_count[digit - 1] == 1 {
                     return false;
@@ -27,7 +17,7 @@ pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
     for index in 0..9 {
         let mut num_count = [0; 9];
         for index_2 in 0..9 {
-            let digit: usize = sudoku_2d[index_2][index];
+            let digit: usize = board[index_2][index].to_digit(10).unwrap_or_default() as usize;
             if digit != 0 {
                 if num_count[digit - 1] == 1 {
                     return false;
@@ -45,7 +35,9 @@ pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
                 for index_2 in 1..=3 {
                     let row_index = (index_2 + index_row * 3) - 1;
                     let column_index = (index_mid + index_cloumn * 3) - 1;
-                    let digit: usize = sudoku_2d[row_index][column_index];
+                    let digit: usize = board[row_index][column_index]
+                        .to_digit(10)
+                        .unwrap_or_default() as usize;
                     if digit != 0 {
                         if num_count[digit - 1] == 1 {
                             return false;
