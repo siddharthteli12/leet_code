@@ -1,5 +1,6 @@
+use std::collections::HashSet;
 pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
-    let mut result: Vec<Vec<i32>> = vec![];
+    let mut result = HashSet::<(i32, i32, i32)>::new();
     nums.sort();
     if nums[0] > 0 || *nums.last().unwrap() < 0 {
         return vec![];
@@ -13,16 +14,10 @@ pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
                 if nums[counter] < 0 {
                     break;
                 } else {
-                    let target = num.abs() - nums[counter];
-                    if target + nums[counter] + num == 0 {
-                        if let Ok(target_index) = nums.binary_search(&target) {
-                            if target_index != counter && target_index != index {
-                                let mut three_sum = vec![*num, target, nums[counter]];
-                                three_sum.sort();
-                                if !result.contains(&three_sum) {
-                                    result.push(three_sum.to_vec());
-                                }
-                            }
+                    let target = -(num + nums[counter]);
+                    if let Ok(target_index) = nums.binary_search(&target) {
+                        if target_index != counter && target_index != index {
+                            result.insert(sort_three_sum(*num, target, nums[counter]));
                         }
                     }
                     counter -= 1;
@@ -30,9 +25,22 @@ pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
             }
         }
     }
+
     result
+        .iter()
+        .map(|(first, sec, third)| vec![*first, *sec, *third])
+        .collect()
 }
 
+fn sort_three_sum(x: i32, y: i32, z: i32) -> (i32, i32, i32) {
+    match x > y {
+        true => (y, x, z),
+        false => match y > z {
+            true => (x, z, y),
+            false => (x, y, z),
+        },
+    }
+}
 #[cfg(test)]
 mod tests {
     use super::*;
