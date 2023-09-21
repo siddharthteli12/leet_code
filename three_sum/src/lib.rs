@@ -1,7 +1,5 @@
-use std::collections::HashSet;
-
 pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
-    let mut result = HashSet::<(i32, i32, i32)>::new();
+    let mut result: Vec<Vec<i32>> = vec![];
     nums.sort();
     if nums[0] > 0 || *nums.last().unwrap() < 0 {
         return vec![];
@@ -19,9 +17,11 @@ pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
                     if target + nums[counter] + num == 0 {
                         if let Ok(target_index) = nums.binary_search(&target) {
                             if target_index != counter && target_index != index {
-                                let mut three_sum = [*num, target, nums[counter]];
+                                let mut three_sum = vec![*num, target, nums[counter]];
                                 three_sum.sort();
-                                result.insert((three_sum[0], three_sum[1], three_sum[2]));
+                                if !result.contains(&three_sum) {
+                                    result.push(three_sum.to_vec());
+                                }
                             }
                         }
                     }
@@ -30,11 +30,7 @@ pub fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {
             }
         }
     }
-
     result
-        .iter()
-        .map(|(first, sec, third)| vec![*first, *sec, *third])
-        .collect()
 }
 
 #[cfg(test)]
