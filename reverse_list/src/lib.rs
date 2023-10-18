@@ -11,7 +11,7 @@ impl ListNode {
     }
 }
 
-pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+pub fn reverse_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     if head.is_none() {
         return None;
     }
@@ -25,11 +25,14 @@ pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         pointer = &pointer.as_ref().unwrap().next;
     }
 
-    let mut new_list = Box::new(ListNode {
+    head = Some(Box::new(ListNode {
         val: list.pop().unwrap(),
         next: None,
-    });
-    let mut pointer = &mut new_list.next;
+    }));
+    let mut pointer = match head {
+        Some(ref mut val) => &mut val.next,
+        None => unreachable!(),
+    };
     for value in list.iter().rev() {
         *pointer = Some(Box::new(ListNode {
             val: *value,
@@ -41,7 +44,7 @@ pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         };
     }
 
-    Some(new_list)
+    head
 }
 
 #[cfg(test)]
