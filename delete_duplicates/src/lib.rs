@@ -10,11 +10,10 @@ impl ListNode {
         ListNode { next: None, val }
     }
 }
-pub fn delete_duplicates(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-    if head.is_none() {
-        return None;
-    }
-    let mut head = head.unwrap();
+pub fn delete_duplicates(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+    // This consumes more memory, if is_none can be used.
+    head.as_ref()?;
+    let head = head.unwrap();
     let mut result_list = Box::new(ListNode {
         val: head.val,
         next: None,
@@ -23,7 +22,7 @@ pub fn delete_duplicates(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode
     let mut pointer2 = &head.next;
     let mut value1 = head.val;
     while pointer2.is_some() {
-        let mut value2 = pointer2.as_ref().unwrap().val;
+        let value2 = pointer2.as_ref().unwrap().val;
         pointer2 = &pointer2.as_ref().unwrap().next;
         if value1 != value2 {
             *pointer = Some(Box::new(ListNode {
