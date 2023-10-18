@@ -25,26 +25,16 @@ pub fn reverse_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         pointer = &pointer.as_ref().unwrap().next;
     }
 
-    head = Some(Box::new(ListNode {
-        val: list.pop().unwrap(),
-        next: None,
-    }));
-    let mut pointer = match head {
-        Some(ref mut val) => &mut val.next,
-        None => unreachable!(),
-    };
-    for value in list.iter().rev() {
-        *pointer = Some(Box::new(ListNode {
-            val: *value,
-            next: None,
-        }));
-        pointer = match pointer {
-            Some(val) => &mut val.next,
-            None => unreachable!(),
-        };
-    }
+    let new_list = create_link_list(list);
 
-    head
+    new_list
+}
+
+fn create_link_list(mut list: Vec<i32>) -> Option<Box<ListNode>> {
+        match list.pop() {
+            Some(val) => return Some(Box::new(ListNode { val, next: create_link_list(list) })),
+            None => None
+        }
 }
 
 #[cfg(test)]
