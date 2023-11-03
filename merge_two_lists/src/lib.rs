@@ -1,5 +1,3 @@
-use std::slice::RSplit;
-
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct ListNode {
     pub val: i32,
@@ -26,16 +24,11 @@ pub fn merge_two_lists(
         pointer = &mut pointer.as_deref_mut().unwrap().next;
     }
 
-    while list1.is_some() {
-        let val = list1.as_ref().unwrap().val;
-        list1 = list1.unwrap().next;
-        *pointer = Some(Box::new(ListNode { val, next: None }));
-        pointer = &mut pointer.as_deref_mut().unwrap().next;
-    }
+    let mut temp_list = if list1.is_some() { list1 } else { list2 };
 
-    while list2.is_some() {
-        let val = list2.as_ref().unwrap().val;
-        list2 = list2.unwrap().next;
+    while temp_list.is_some() {
+        let val = temp_list.as_ref().unwrap().val;
+        temp_list = temp_list.unwrap().next;
         *pointer = Some(Box::new(ListNode { val, next: None }));
         pointer = &mut pointer.as_deref_mut().unwrap().next;
     }
