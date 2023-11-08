@@ -6,9 +6,9 @@ pub fn max_profit(prices: Vec<i32>) -> i32 {
     // Max profit for tx.
     let mut max_profit = 0;
     // Iterate all price & cal. max profit.
-    for price in prices.iter().skip(1) {
-        if buy_price > *price {
-            buy_price = *price;
+    for price in prices {
+        if buy_price > price {
+            buy_price = price;
         } else {
             let profit = price - buy_price;
             if max_profit < profit {
