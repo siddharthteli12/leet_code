@@ -1,22 +1,16 @@
 pub fn max_profit(prices: Vec<i32>) -> i32 {
-    // Solving with sliding window algo.
-
-    // Store init buy price, update if lower price found.
     let mut buy_price = prices[0];
-    // Max profit for tx.
     let mut max_profit = 0;
-    // Iterate all price & cal. max profit.
-    for price in prices {
-        if buy_price > price {
-            buy_price = price;
+    prices.iter().for_each(|price| {
+        if buy_price > *price {
+            buy_price = *price;
         } else {
-            let profit = price - buy_price;
+            let profit = *price - buy_price;
             if max_profit < profit {
                 max_profit = profit;
             }
         }
-    }
-    // Return max profit
+    });
     max_profit
 }
 #[cfg(test)]
