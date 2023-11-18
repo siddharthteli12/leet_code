@@ -1,8 +1,10 @@
+type Partition = (Vec<(usize, i32)>, Vec<(usize, i32)>);
+
 pub fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
     let mut stack: Vec<(usize, i32)> = Vec::with_capacity(temperatures.len());
     let mut result = vec![0; temperatures.len()];
     for (index, temperature) in temperatures.iter().enumerate() {
-        let (targets, remaining): (Vec<(usize, i32)>, Vec<(usize, i32)>) =
+        let (targets, remaining): Partition =
             stack.into_iter().partition(|&val| val.1 < *temperature);
         stack = remaining;
 
