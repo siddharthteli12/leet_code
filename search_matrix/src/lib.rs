@@ -1,19 +1,21 @@
 pub fn search_matrix(matrix: Vec<Vec<i32>>, target: i32) -> bool {
-    // No. of rows & cloums
     let cloums_length = matrix[0].len();
     let rows_length = matrix.len();
 
-    // This is obsolute index.
-    let mut left_index: i32 = 0;
-    let mut right_index: i32 = ((rows_length * cloums_length) - 1) as i32;
+    let mut left_index = 0;
+    let mut right_index = (rows_length * cloums_length) - 1;
+
     while right_index >= left_index {
-        // Absolute index.
-        let mid_index = ((right_index - left_index) / 2) + left_index;
-        let row_index = mid_index as usize / cloums_length;
-        let cloums_index = mid_index as usize - (cloums_length * row_index);
+        let mid_index = (right_index + left_index) / 2;
+        let row_index = mid_index / cloums_length;
+        let cloums_index = mid_index % cloums_length;
 
         if matrix[row_index][cloums_index] > target {
-            right_index = mid_index - 1;
+            if let Some(new_index) = mid_index.checked_sub(1) {
+                right_index = new_index;
+            } else {
+                break;
+            }
         } else if matrix[row_index][cloums_index] < target {
             left_index = mid_index + 1;
         } else {
