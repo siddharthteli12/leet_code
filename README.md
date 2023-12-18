@@ -13,3 +13,5 @@ Leet code hands on
 - [search_insert](https://leetcode.com/problems/search-insert-position/)
 - [length_of_last_word](https://leetcode.com/problems/length-of-last-word/)
 - [plus_one](https://leetcode.com/problems/plus-one/)
+- [my_sqrt](https://leetcode.com/problems/sqrtx/)
+- [valid_parentheses](https://leetcode.com/problems/valid-parentheses/)
