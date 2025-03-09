@@ -1,0 +1,6 @@
+[package]
+name = "min_sub_array_len"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
