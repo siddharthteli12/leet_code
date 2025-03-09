@@ -12,7 +12,7 @@ pub fn min_sub_array_len(target: i32, nums: Vec<i32>) -> i32 {
 
             // Start reducing the solution now.
             while left <= right {
-                let temp = (sum as i32) - nums[left];
+                let temp = sum - nums[left];
                 if temp >= target {
                     sum = temp;
                     left += 1;
